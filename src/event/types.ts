@@ -1,5 +1,5 @@
-import { Disposable } from '../disposable';
-import { EventArgs } from './args';
+import type { Disposable } from '../disposable';
+import type { EventArgs } from './args';
 
 export type EventSubscription<
   TSender extends Disposable,

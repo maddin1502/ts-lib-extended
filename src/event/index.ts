@@ -1,6 +1,6 @@
-import { Disposable } from '../disposable';
-import { EventArgs } from './args';
-import { EventSubscription, EventUnsubscription } from './types';
+import type { Disposable } from '../disposable';
+import type { EventArgs } from './args';
+import type { EventSubscription, EventUnsubscription } from './types';
 
 export class Event<TSender extends Disposable, TArgs extends EventArgs | void = void> {
   private _detached: boolean;
