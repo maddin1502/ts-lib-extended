@@ -25,5 +25,5 @@
     "no-param-reassign": "warn",
     "quotes": ["warn", "single"],
     "semi": "warn"
-  }
+  }, "ignorePatterns": ["dist", "tests/reports"]
 }

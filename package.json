@@ -2,6 +2,9 @@
   "name": "ts-lib-extended",
   "version": "1.0.0",
   "description": "Additional types for typescript",
+  "files": [
+    "dist"
+  ],
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
