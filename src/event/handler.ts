@@ -5,6 +5,16 @@ import { DisposableBase } from '../disposable/base';
 import type { EventArgs } from './args';
 import type { EventCallback } from './types';
 
+/**
+ * A handler that provides subscribable, public events.
+ * The handler is intended for internal (protected, private) use
+ *
+ * @export
+ * @class EventHandler
+ * @extends {DisposableBase}
+ * @template TSender
+ * @template TArgs
+ */
 export class EventHandler<TSender extends Disposable, TArgs extends EventArgs | void = void> extends DisposableBase {
   private _callbacks: Dictionary<EventCallback<TSender, TArgs>>;
   private _event: Event<TSender, TArgs> | undefined;
@@ -22,10 +32,24 @@ export class EventHandler<TSender extends Disposable, TArgs extends EventArgs | 
     );
   }
 
+  /**
+   * the subscribable event itself
+   *
+   * @readonly
+   * @type {Event<TSender, TArgs>}
+   * @memberof EventHandler
+   */
   public get event(): Event<TSender, TArgs> {
     return this.validateDisposed(this._event);
   }
 
+  /**
+   * trigger/invoke event
+   *
+   * @param {TSender} sender_
+   * @param {TArgs} eventArgs_
+   * @memberof EventHandler
+   */
   public invoke(sender_: TSender, eventArgs_: TArgs): void {
     const keys = Object.keys(this._callbacks);
 
@@ -69,6 +93,4 @@ export class EventHandler<TSender extends Disposable, TArgs extends EventArgs | 
   protected disposedInstance(): void {
     /** there is nothing to do */
   }
-
-  // TODO: use generator for callback keys?
 }

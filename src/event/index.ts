@@ -2,6 +2,14 @@ import type { Disposable } from '../disposable';
 import type { EventArgs } from './args';
 import type { EventSubscription, EventUnsubscription } from './types';
 
+/**
+ * Subscribable listener to certain events
+ *
+ * @export
+ * @class Event
+ * @template TSender
+ * @template TArgs
+ */
 export class Event<TSender extends Disposable, TArgs extends EventArgs | void = void> {
   private _detached: boolean;
   private _subscribe: EventSubscription<TSender, TArgs> | undefined;
@@ -18,10 +26,24 @@ export class Event<TSender extends Disposable, TArgs extends EventArgs | void = 
     detachEventProxy_(() => this.detach());
   }
 
+  /**
+   * subrcribe to event
+   *
+   * @readonly
+   * @type {EventSubscription<TSender, TArgs>}
+   * @memberof Event
+   */
   public get subscribe(): EventSubscription<TSender, TArgs> {
     return this.validateDetached(this._subscribe);
   }
 
+  /**
+   * unsubrcribe from event
+   *
+   * @readonly
+   * @type {EventUnsubscription}
+   * @memberof Event
+   */
   public get unsubscribe(): EventUnsubscription {
     return this.validateDetached(this._unsubscribe);
   }

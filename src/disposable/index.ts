@@ -2,6 +2,13 @@ import type { Event } from '../event';
 import { EventHandler } from '../event/handler';
 import { DisposableBase } from './base';
 
+/**
+ * Core for disposable instances
+ *
+ * @export
+ * @class Disposable
+ * @extends {DisposableBase}
+ */
 export class Disposable extends DisposableBase
 {
   private _disposingHandler: EventHandler<Disposable>;
@@ -15,8 +22,22 @@ export class Disposable extends DisposableBase
     this._disposedHandler = new EventHandler<Disposable>();
   }
 
+  /**
+   * Event that is invoked before the instance is disposed
+   *
+   * @readonly
+   * @type {Event<Disposable>}
+   * @memberof Disposable
+   */
   public get disposing(): Event<Disposable> { return this._disposingHandler.event; }
 
+  /**
+   * Event that is invoked after the instance is disposed
+   *
+   * @readonly
+   * @type {Event<Disposable>}
+   * @memberof Disposable
+   */
   public get disposed(): Event<Disposable> { return this._disposedHandler.event; }
 
   protected disposingInstance(): void {
