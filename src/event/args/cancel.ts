@@ -1,6 +1,14 @@
 import { EventArgs } from '.';
 
-export class EventCancelArgs<TValue> extends EventArgs<TValue> {
+/**
+ * EventArgs that can be used to cancel the execution of an event
+ *
+ * @export
+ * @class CancelEventArgs
+ * @extends {EventArgs<TValue>}
+ * @template TValue
+ */
+export class CancelEventArgs<TValue = any> extends EventArgs<TValue> {
   constructor(value_: TValue) {
     super(value_);
     this.cancel = false;

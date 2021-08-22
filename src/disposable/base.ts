@@ -1,3 +1,10 @@
+/**
+ * Provides basic stuff for disposable instances
+ *
+ * @export
+ * @abstract
+ * @class DisposableBase
+ */
 export abstract class DisposableBase {
   protected _isDisposed: boolean;
 
@@ -7,6 +14,12 @@ export abstract class DisposableBase {
 
   public get isDisposed(): boolean { return this._isDisposed; }
 
+  /**
+   * Dispose the instance (cleanup internals). The instance should and can no longer be used afterwards
+   *
+   * @return {*}  {void}
+   * @memberof DisposableBase
+   */
   public dispose(): void {
     if (this.isDisposed) {
       return;
