@@ -1,12 +1,17 @@
 # typescript-lib-extended
 > Additional types for typescript
 
+[![npm version](https://badge.fury.io/js/ts-lib-extended.svg)](https://badge.fury.io/js/ts-lib-extended)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![npm downloads](https://badgen.net/npm/dw/ts-lib-extended)](https://badge.fury.io/js/ts-lib-extended)
+
 ## Features
 - Enum type
 - Dictionary types (safe, readonly, key + value types)
 - Constructor types (abstract, standard, parameter + instance types)
 - Core class for disposable instances
 - Events (handler, args)
+- Array types (minimal length array, item type)
 
 ## Installation
 ```bash
@@ -153,3 +158,67 @@ console.log(example.isDisposed) // true
 ```
 
 This example uses the `disposers` feature for disposing internal stuff. You can also use `overrides` (disposingInstance, disposedInstance) to get this job done.
+
+# Safe dictionary
+
+```ts
+import { Dictionary } from 'ts-lib-extended';
+
+const dictionary: Dictionary<number> = {
+  spaceballs: 42
+};
+
+const answer = dictionary.spaceballs;
+
+if (answer) {
+  console.log(answer);
+}
+```
+
+# Minimal length array
+
+The type `MinArray` can restrict array values to a minimum length
+
+```ts
+import { MinArray } from 'ts-lib-extended';
+
+function calcSum(...array_: MinArray<number, 2>): number {
+  let sum = 0;
+
+  for (let i = 0; i < array_.length; i++) {
+    sum += array_[i];
+  }
+
+  return sum;
+}
+
+console.log(sumArray(1)); // TS Error - at least 2 arguments are expected
+console.log(sumArray(1,2,3,5,8,13)); // 32
+```
+
+# Enumerable
+
+By default there is no basic (accessible) enum type that can be used to specify variable/param types. `Enumerable` solves the problem.
+
+```ts
+enum MyEnum {
+  tony = 'iron man',
+  steve = 'cap',
+  peter = 'spider-man',
+  bruce = 'hulk'
+}
+
+enum NumberEnum {
+  tony,
+  steve,
+  peter,
+  bruce
+}
+
+function doSomethingWithEnum({}: Enumerable<string>): void {
+  /** crazy code here */
+}
+
+doSomethingWithEnum(NumberEnum); // TS Error - function argument is limited to string enum type
+doSomethingWithEnum(MyEnum); // NO error
+```
