@@ -1,4 +1,3 @@
-import type { Disposable } from '../disposable';
 import type { EventArgs } from './args';
 import type { EventSubscription, EventUnsubscription } from './types';
 
@@ -10,7 +9,7 @@ import type { EventSubscription, EventUnsubscription } from './types';
  * @template TSender
  * @template TArgs
  */
-export class Event<TSender extends Disposable, TArgs extends EventArgs | void = void> {
+export class Event<TSender, TArgs extends EventArgs | void = void> {
   private _detached: boolean;
   private _subscribe: EventSubscription<TSender, TArgs> | undefined;
   private _unsubscribe: EventUnsubscription | undefined;
@@ -50,7 +49,7 @@ export class Event<TSender extends Disposable, TArgs extends EventArgs | void = 
 
   private validateDetached<T>(value_: T | undefined): T | never {
     if (this._detached || value_ === undefined) {
-      throw new Error('Instance is disposed!');
+      throw new Error('Event is detached!');
     }
 
     return value_;
