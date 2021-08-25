@@ -44,8 +44,8 @@ export class Disposable extends DisposableBase
     this._disposingHandler.invoke(this);
     this._disposingHandler.dispose();
 
-    for (const disposer of this._disposers) {
-      disposer();
+    for (let i = 0; i < this._disposers.length; i++) {
+      this._disposers[i]();
     }
   }
 

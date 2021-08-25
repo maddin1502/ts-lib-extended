@@ -15,9 +15,15 @@
     "@typescript-eslint/array-type": "off",
     "@typescript-eslint/consistent-type-assertions": "warn",
     "@typescript-eslint/no-empty-interface": "off",
+    "@typescript-eslint/no-empty-function": "off",
     "@typescript-eslint/no-var-requires": "warn",
-    "@typescript-eslint/prefer-for-of": "off",
     "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/indent": ["warn", 2],
+    "@typescript-eslint/comma-dangle": "warn",
+    "@typescript-eslint/no-shadow": "warn",
+    "prefer-arrow-callback": "warn",
+    "object-shorthand": "warn",
+    "camelcase": "warn",
     "indent": ["warn", 2],
     "no-bitwise": "off",
     "no-console": "warn",
@@ -25,5 +31,6 @@
     "no-param-reassign": "warn",
     "quotes": ["warn", "single"],
     "semi": "warn"
-  }, "ignorePatterns": ["dist", "tests/reports"]
+  },
+  "ignorePatterns": ["dist", "tests/reports"]
 }
