@@ -1,5 +1,3 @@
-import type { Disposable } from '../disposable';
-import type { PublicMembers } from '../mapping';
 import type { EventArgs } from './args';
 import type { EventSubscription, EventUnsubscription } from './types';
 
@@ -11,7 +9,7 @@ import type { EventSubscription, EventUnsubscription } from './types';
  * @template TSender
  * @template TArgs
  */
-export class Event<TSender extends PublicMembers<Disposable>, TArgs extends EventArgs | void = void> {
+export class Event<TSender, TArgs extends EventArgs | void = void> {
   private _detached: boolean;
   private _subscribe: EventSubscription<TSender, TArgs> | undefined;
   private _unsubscribe: EventUnsubscription | undefined;

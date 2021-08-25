@@ -11,34 +11,34 @@ import { DisposableBase } from './base';
  */
 export class Disposable extends DisposableBase
 {
-  private _disposingHandler: EventHandler<Disposable>;
-  private _disposedHandler: EventHandler<Disposable>;
+  private _disposingHandler: EventHandler<this>;
+  private _disposedHandler: EventHandler<this>;
   protected _disposers: (() => void)[];
 
   constructor() {
     super();
     this._disposers = [];
-    this._disposingHandler = new EventHandler<Disposable>();
-    this._disposedHandler = new EventHandler<Disposable>();
+    this._disposingHandler = new EventHandler<this>();
+    this._disposedHandler = new EventHandler<this>();
   }
 
   /**
    * Event that is invoked before the instance is disposed
    *
    * @readonly
-   * @type {Event<Disposable>}
+   * @type {Event<this>}
    * @memberof Disposable
    */
-  public get disposing(): Event<Disposable> { return this._disposingHandler.event; }
+  public get disposing(): Event<this> { return this._disposingHandler.event; }
 
   /**
    * Event that is invoked after the instance is disposed
    *
    * @readonly
-   * @type {Event<Disposable>}
+   * @type {Event<this>}
    * @memberof Disposable
    */
-  public get disposed(): Event<Disposable> { return this._disposedHandler.event; }
+  public get disposed(): Event<this> { return this._disposedHandler.event; }
 
   protected disposingInstance(): void {
     this._disposingHandler.invoke(this);

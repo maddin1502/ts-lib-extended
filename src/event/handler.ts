@@ -1,6 +1,5 @@
 import { Event } from '.';
 import type { Dictionary } from '../dictionary';
-import { Disposable } from '../disposable';
 import { DisposableBase } from '../disposable/base';
 import type { EventArgs } from './args';
 import type { EventCallback } from './types';
@@ -15,7 +14,7 @@ import type { EventCallback } from './types';
  * @template TSender
  * @template TArgs
  */
-export class EventHandler<TSender extends Disposable, TArgs extends EventArgs | void = void> extends DisposableBase {
+export class EventHandler<TSender, TArgs extends EventArgs | void = void> extends DisposableBase {
   private _callbacks: Dictionary<EventCallback<TSender, TArgs>>;
   private _event: Event<TSender, TArgs> | undefined;
   private _detachEvent: (() => void) | undefined;
