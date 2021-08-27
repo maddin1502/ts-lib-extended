@@ -1,4 +1,4 @@
-# typescript-lib-extended
+# ts-lib-extended
 > Additional types for typescript
 
 [![npm version](https://badge.fury.io/js/ts-lib-extended.svg)](https://badge.fury.io/js/ts-lib-extended)
