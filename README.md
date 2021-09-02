@@ -1,5 +1,5 @@
 # ts-lib-extended
-> Additional types for typescript
+> Additional types and tools for typescript
 
 [![npm version](https://badge.fury.io/js/ts-lib-extended.svg)](https://badge.fury.io/js/ts-lib-extended)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
