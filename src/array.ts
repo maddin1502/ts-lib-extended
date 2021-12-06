@@ -1,5 +1,5 @@
 export type ArrayItem<T extends IterableIterator<any> | ArrayLike<any>>
-  = T extends { [Symbol.iterator](): IterableIterator<infer P>; }
+  = T extends { [Symbol.iterator](): IterableIterator<infer P> }
     ? P
     : T extends ArrayLike<infer P>
       ? P

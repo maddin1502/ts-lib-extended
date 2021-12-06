@@ -24,6 +24,4 @@ export type {
   EventSubscription,
   EventUnsubscription
 } from './event/types';
-export type {
-  PublicMembers
-} from './mapping';
+export type { PublicMembers } from './mapping';
