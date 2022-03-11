@@ -14,7 +14,11 @@ export type {
 } from './dictionary';
 export { Disposable } from './disposable';
 export { DisposableBase } from './disposable/base';
-export type { Enumerable } from './enum';
+export type {
+  Enumerable,
+  EnumerableBase,
+  EnumerableValue
+} from './enum';
 export { Event } from './event';
 export { EventArgs } from './event/args';
 export { CancelEventArgs } from './event/args/cancel';
@@ -25,3 +29,4 @@ export type {
   EventUnsubscription
 } from './event/types';
 export type { PublicMembers } from './mapping';
+

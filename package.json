@@ -1,6 +1,6 @@
 {
   "name": "ts-lib-extended",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "Additional types and tools for typescript",
   "files": [
     "dist"
@@ -14,8 +14,9 @@
     "reset-modules": "npx --quiet rimraf node_modules/ package-lock.json",
     "reset-creation": "npx --quiet rimraf dist/ tests/reports/",
     "reset": "npm run reset-creation && npm run reset-modules",
-    "init": "npm run reset && npm i && npm run build && npm run test",
-    "create": "npm run reset-creation && npm run build && npm run test"
+    "validate": "npm run reset && npm i && npm run build && npm test",
+    "create": "npm run reset-creation && npm run build && npm test",
+    "produce": "npm run validate && npm i --only=prod"
   },
   "repository": {
     "type": "git",
