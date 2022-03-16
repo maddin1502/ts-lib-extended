@@ -3,7 +3,9 @@ import {
   DisposableBase,
   Event,
   EventArgs,
-  CancelEventArgs
+  CancelEventArgs,
+  EnumerableObject,
+  enumerableObject
 } from '../../src';
 
 describe('root', () => {
@@ -13,5 +15,7 @@ describe('root', () => {
     expect(Event).toBeDefined();
     expect(EventArgs).toBeDefined();
     expect(CancelEventArgs).toBeDefined();
+    expect(EnumerableObject).toBeDefined();
+    expect(enumerableObject).toBeDefined();
   });
 });

@@ -192,8 +192,8 @@ function calcSum(...array_: MinArray<number, 2>): number {
   return sum;
 }
 
-console.log(sumArray(1)); // TS Error - at least 2 arguments are expected
-console.log(sumArray(1,2,3,5,8,13)); // 32
+console.log(calcSum(1)); // TS Error - at least 2 arguments are expected
+console.log(calcSum(1,2,3,5,8,13)); // 32
 ```
 
 # Enumerable
@@ -221,4 +221,26 @@ function doSomethingWithEnum({}: Enumerable<string>): void {
 
 doSomethingWithEnum(NumberEnum); // TS Error - function argument is limited to string enum type
 doSomethingWithEnum(MyEnum); // NO error
+```
+
+## Gain keys and values
+
+Gaining keys and/or values from an enum is tricky. Object.keys(), Object.values() and Object.entries() do not correctly consider the numeric index reverse lookup entries for numeric enums. The `enumarableObject` will solve this issue.
+
+```ts
+import { enumarableObject } from 'ts-lib-extended';
+
+enum NumberEnum {
+  e1,
+  e2
+}
+
+console.log(Object.keys(NumberEnum)) // ["0", "1", "e1", "e2"]
+console.log(enumarableObject.keys(NumberEnum)) // ["e1", "e2"]
+
+console.log(Object.values(NumberEnum)) // ["e1", "e2", 0, 1]
+console.log(enumarableObject.values(NumberEnum)) // [0, 1]
+
+console.log(Object.entries(NumberEnum)) // [["0", "e1"], ["1", "e2"], ["e1", 0], ["e2", 1]]
+console.log(enumarableObject.entries(NumberEnum)) // [["e1", 0], ["e2", 1]]
 ```

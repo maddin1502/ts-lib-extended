@@ -1,3 +1,5 @@
+import { EnumerableObject } from './enumerable';
+
 export type { ArrayItem, MinArray } from './array';
 export type {
   AbstractConstructor,
@@ -17,8 +19,9 @@ export { DisposableBase } from './disposable/base';
 export type {
   Enumerable,
   EnumerableBase,
+  EnumerableEntry,
   EnumerableValue
-} from './enum';
+} from './enumerable';
 export { Event } from './event';
 export { EventArgs } from './event/args';
 export { CancelEventArgs } from './event/args/cancel';
@@ -29,4 +32,6 @@ export type {
   EventUnsubscription
 } from './event/types';
 export type { PublicMembers } from './mapping';
+export { EnumerableObject };
 
+export const enumerableObject = new EnumerableObject();

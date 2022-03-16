@@ -42,7 +42,7 @@ function createTestSubject(value_: number): TestSubject {
   return new TestSubject(value_);
 }
 
-describe(TestSubject.name, () => {
+describe(TestSubject, () => {
   test('value', () => {
     expect.assertions(25);
     const subject = createTestSubject(42);
