@@ -1,6 +1,6 @@
 import { Disposable } from '../../src/disposable';
 
-describe(Disposable.name, () => {
+describe(Disposable, () => {
   test('dispose', () => {
     expect.assertions(7);
     const disposable = new Disposable();

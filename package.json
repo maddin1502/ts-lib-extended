@@ -1,6 +1,6 @@
 {
   "name": "ts-lib-extended",
-  "version": "1.1.5",
+  "version": "1.2.0",
   "description": "Additional types and tools for typescript",
   "files": [
     "dist"
@@ -48,7 +48,7 @@
     "jest-html-reporters": "^2.1.6",
     "jest-junit": "^13.0.0",
     "ts-jest": "^27.1.0",
-    "ts-node": "10.4.0",
+    "ts-node": "^10.4.0",
     "typescript": "^4.5.2"
   }
 }
