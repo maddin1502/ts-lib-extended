@@ -5,7 +5,7 @@
   "files": [
     "dist"
   ],
-  "module": "dist/index.js",
+  "main": "dist",
   "type": "module",
   "scripts": {
     "build": "tsc -p ./tsconfig.prod.json",
