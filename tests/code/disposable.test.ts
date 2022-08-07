@@ -1,6 +1,7 @@
+import { describe, expect, test } from 'vitest';
 import { Disposable } from '../../src/disposable';
 
-describe(Disposable, () => {
+describe(Disposable.name, () => {
   test('dispose', () => {
     expect.assertions(7);
     const disposable = new Disposable();

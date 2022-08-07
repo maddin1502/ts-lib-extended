@@ -1,3 +1,4 @@
+import { describe, expect, test } from 'vitest';
 import { Disposable } from '../../src/disposable';
 import { Event } from '../../src/event';
 import { EventArgs } from '../../src/event/args';
@@ -42,7 +43,7 @@ function createTestSubject(value_: number): TestSubject {
   return new TestSubject(value_);
 }
 
-describe(TestSubject, () => {
+describe(TestSubject.name, () => {
   test('value', () => {
     expect.assertions(25);
     const subject = createTestSubject(42);
