@@ -1,3 +1,4 @@
+import { describe, expect, test } from 'vitest';
 import { EnumerableObject } from '../../src/enumerable';
 
 enum MixedEnum {
@@ -15,7 +16,7 @@ enum StringEnum {
   b = 'bar'
 }
 
-describe(EnumerableObject, () => {
+describe(EnumerableObject.name, () => {
   test('entries', () => {
     expect.assertions(3);
     const enumObj = new EnumerableObject();

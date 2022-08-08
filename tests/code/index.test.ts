@@ -1,14 +1,15 @@
+import { describe, expect, test } from 'vitest';
 import {
+  CancelEventArgs,
   Disposable,
   DisposableBase,
-  Event,
-  EventArgs,
-  CancelEventArgs,
   EnumerableObject,
-  enumerableObject
+  enumerableObject,
+  Event,
+  EventArgs
 } from '../../src';
 
-describe('root', () => {
+describe('main', () => {
   test('exports', () => {
     expect(Disposable).toBeDefined();
     expect(DisposableBase).toBeDefined();
