@@ -10,18 +10,22 @@ import type { EventSubscription, EventUnsubscription } from './types';
  * @template TArgs
  */
 export class Event<TSender, TArgs extends EventArgs | void = void> {
-  private _detached: boolean;
-  private _subscribe: EventSubscription<TSender, TArgs> | undefined;
-  private _unsubscribe: EventUnsubscription | undefined;
+  private _subscription:
+    | undefined
+    | {
+        subscribe: EventSubscription<TSender, TArgs>;
+        unsubscribe: EventUnsubscription;
+      };
 
   constructor(
     subscribe_: EventSubscription<TSender, TArgs>,
-    unsubscrbe_: EventUnsubscription,
+    unsubscribe_: EventUnsubscription,
     detachEventProxy_: (detachEvent_: () => void) => void
   ) {
-    this._detached = false;
-    this._subscribe = subscribe_;
-    this._unsubscribe = unsubscrbe_;
+    this._subscription = {
+      subscribe: subscribe_,
+      unsubscribe: unsubscribe_
+    };
     detachEventProxy_(() => this.detach());
   }
 
@@ -33,7 +37,7 @@ export class Event<TSender, TArgs extends EventArgs | void = void> {
    * @memberof Event
    */
   public get subscribe(): EventSubscription<TSender, TArgs> {
-    return this.validateDetached(this._subscribe);
+    return this.validateDetached(this._subscription?.subscribe);
   }
 
   /**
@@ -44,11 +48,11 @@ export class Event<TSender, TArgs extends EventArgs | void = void> {
    * @memberof Event
    */
   public get unsubscribe(): EventUnsubscription {
-    return this.validateDetached(this._unsubscribe);
+    return this.validateDetached(this._subscription?.unsubscribe);
   }
 
   private validateDetached<T>(value_: T | undefined): T | never {
-    if (this._detached || value_ === undefined) {
+    if (value_ === undefined) {
       throw new Error('Event is detached!');
     }
 
@@ -56,8 +60,6 @@ export class Event<TSender, TArgs extends EventArgs | void = void> {
   }
 
   private detach(): void {
-    this._detached = true;
-    this._subscribe = undefined;
-    this._unsubscribe = undefined;
+    this._subscription = undefined;
   }
 }

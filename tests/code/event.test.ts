@@ -6,7 +6,10 @@ import { CancelEventArgs } from '../../src/event/args/cancel';
 import { EventHandler } from '../../src/event/handler';
 
 class TestSubject extends Disposable {
-  private _valueChangingHandler: EventHandler<this, CancelEventArgs<{ old: number, new: number }>>;
+  private _valueChangingHandler: EventHandler<
+    this,
+    CancelEventArgs<{ old: number; new: number }>
+  >;
   private _valueChangedHandler: EventHandler<this, EventArgs<number>>;
   private _value: number;
 
@@ -21,13 +24,25 @@ class TestSubject extends Disposable {
     });
   }
 
-  public get changing(): Event<this, CancelEventArgs<{ old: number, new: number }>> { return this._valueChangingHandler.event; }
+  public get changing(): Event<
+    this,
+    CancelEventArgs<{ old: number; new: number }>
+  > {
+    return this._valueChangingHandler.event;
+  }
 
-  public get changed(): Event<this, EventArgs<number>> { return this._valueChangedHandler.event; }
+  public get changed(): Event<this, EventArgs<number>> {
+    return this._valueChangedHandler.event;
+  }
 
-  public get value(): number { return this._value; }
+  public get value(): number {
+    return this._value;
+  }
   public set value(new_: number) {
-    const cancelArgs = new CancelEventArgs<{ old: number, new: number }>({ old: this._value, new: new_ });
+    const cancelArgs = new CancelEventArgs<{ old: number; new: number }>({
+      old: this._value,
+      new: new_
+    });
     this._valueChangingHandler.invoke(this, cancelArgs);
 
     if (cancelArgs.cancel) {
@@ -45,22 +60,30 @@ function createTestSubject(value_: number): TestSubject {
 
 describe(TestSubject.name, () => {
   test('value', () => {
-    expect.assertions(25);
+    expect.assertions(27);
     const subject = createTestSubject(42);
     let changingCount = 0;
     let changedCount = 0;
-    expect(subject.changing.subscribe('changing', (sender_, args_) => {
-      expect(subject === sender_).toBe(true);
-      changingCount++;
-      args_.cancel = args_.value.new === 21;
-    })).toBe(true);
-    expect(subject.changed.subscribe('changed', (sender_, args_) => {
-      expect(subject === sender_).toBe(true);
-      changedCount++;
-      expect(args_.value).toBe(123456789);
-    })).toBe(true);
+    expect(
+      subject.changing.subscribe('changing', (sender_, args_) => {
+        expect(subject === sender_).toBe(true);
+        changingCount++;
+        args_.cancel = args_.value.new === 21;
+      })
+    ).toBe(true);
+    expect(
+      subject.changed.subscribe('changed', (sender_, args_) => {
+        expect(subject === sender_).toBe(true);
+        changedCount++;
+        expect(args_.value).toBe(123456789);
+      })
+    ).toBe(true);
 
-    expect(subject.changing.subscribe('changing', () => { /** */ })).toBe(false);
+    expect(
+      subject.changing.subscribe('changing', () => {
+        /** */
+      })
+    ).toBe(false);
 
     expect(changingCount).toBe(0);
     expect(changedCount).toBe(0);
@@ -82,10 +105,34 @@ describe(TestSubject.name, () => {
     expect(changedCount).toBe(1);
     expect(subject.value).toBe(21);
 
+    const changingEventBeforeDispose = subject.changing;
+    const changedEventBeforeDispose = subject.changed;
     subject.dispose();
 
-    expect(() => subject.changing.subscribe('x', () => { /** */ })).toThrow();
-    expect(() => subject.changed.subscribe('y', () => { /** */ })).toThrow();
+    expect(() => {
+      // will throw on getting "changing" event
+      subject.changing.subscribe('x', () => {
+        /** */
+      });
+    }).toThrow();
+    expect(() => {
+      // will throw on subscribing detached event
+      changingEventBeforeDispose.subscribe('x', () => {
+        /** */
+      });
+    }).toThrow();
+    expect(() =>
+    // will throw on getting "changed" event
+      subject.changed.subscribe('y', () => {
+        /** */
+      })
+    ).toThrow();
+    expect(() => {
+      // will throw on subscribing detached event
+      changedEventBeforeDispose.subscribe('x', () => {
+        /** */
+      });
+    }).toThrow();
     expect(() => subject.changing.unsubscribe('x')).toThrow();
     expect(() => subject.changed.unsubscribe('y')).toThrow();
   });
