@@ -92,7 +92,7 @@ export class EnumerableObject {
     for (let i = 0; i < keys.length; i++) {
       const key = keys[i];
 
-      if (/^[0-9]$/.exec(key)) {
+      if (/^[0-9]+$/.exec(key)) {
         continue;
       }
 
