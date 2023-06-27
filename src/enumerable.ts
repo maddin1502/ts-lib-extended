@@ -3,23 +3,26 @@ export type Enumerable<T = any> = {
   [nu: number]: string;
 };
 
-export type EnumerableValue<TEnum extends Enumerable = Enumerable>
-  = TEnum extends Record<infer K, infer V>
+export type EnumerableValue<TEnum extends Enumerable = Enumerable> =
+  TEnum extends Record<infer K, infer V>
     ? K extends string
       ? V
       : never
     : never;
 
-export type EnumerableBase<TEnumValue extends EnumerableValue>
-  = TEnumValue extends string
+export type EnumerableBase<TEnumValue extends EnumerableValue> =
+  TEnumValue extends string
     ? TEnumValue extends number
       ? string | number
       : string
     : TEnumValue extends number
-      ? number
-      : never;
+    ? number
+    : never;
 
-export type EnumerableEntry<E extends Enumerable> = [ keyof E, EnumerableValue<E> ];
+export type EnumerableEntry<E extends Enumerable> = [
+  keyof E,
+  EnumerableValue<E>
+];
 
 /**
  * Gain keys and values from enum instances. Works with string, numeric and mixed enums
@@ -37,12 +40,13 @@ export class EnumerableObject {
    * @return {*}  {ReadonlyArray<EnumerableValue<E>>}
    * @memberof EnumerableObject
    */
-  public values<E extends Enumerable>(enum_: E): ReadonlyArray<EnumerableValue<E>> {
+  public values<E extends Enumerable>(
+    enum_: E
+  ): ReadonlyArray<EnumerableValue<E>> {
     const values: EnumerableValue<E>[] = [];
 
-    this.disassemble(
-      enum_,
-      key_ => values.push(enum_[key_] as EnumerableValue<E>)
+    this.disassemble(enum_, (key_) =>
+      values.push(enum_[key_] as EnumerableValue<E>)
     );
 
     return values;
@@ -59,10 +63,7 @@ export class EnumerableObject {
   public keys<E extends Enumerable>(enum_: E): ReadonlyArray<keyof E> {
     const keys: (keyof E)[] = [];
 
-    this.disassemble(
-      enum_,
-      key_ => keys.push(key_)
-    );
+    this.disassemble(enum_, (key_) => keys.push(key_));
 
     return keys;
   }
@@ -75,18 +76,22 @@ export class EnumerableObject {
    * @return {*}  {ReadonlyArray<EnumerableEntry<E>>}
    * @memberof EnumerableObject
    */
-  public entries<E extends Enumerable>(enum_: E): ReadonlyArray<EnumerableEntry<E>> {
+  public entries<E extends Enumerable>(
+    enum_: E
+  ): ReadonlyArray<EnumerableEntry<E>> {
     const entries: EnumerableEntry<E>[] = [];
 
-    this.disassemble(
-      enum_,
-      key_ => entries.push([ key_, enum_[key_] ] as EnumerableEntry<E>)
+    this.disassemble(enum_, (key_) =>
+      entries.push([key_, enum_[key_]] as EnumerableEntry<E>)
     );
 
     return entries;
   }
 
-  private disassemble<E extends Enumerable>(enum_: E, processKey_: (key_: keyof E) => void): void {
+  private disassemble<E extends Enumerable>(
+    enum_: E,
+    processKey_: (key_: keyof E) => void
+  ): void {
     const keys = Object.keys(enum_);
 
     for (let i = 0; i < keys.length; i++) {

@@ -1,4 +1,4 @@
-import { EventArgs } from '.';
+import { EventArgs } from './index.js';
 
 /**
  * EventArgs that can be used to cancel the execution of an event

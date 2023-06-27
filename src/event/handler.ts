@@ -1,8 +1,8 @@
-import { Event } from '.';
-import type { Dictionary } from '../dictionary';
-import { DisposableBase } from '../disposable/base';
-import type { EventArgs } from './args';
-import type { EventCallback } from './types';
+import type { Dictionary } from '../dictionary.js';
+import { DisposableBase } from '../disposable/base.js';
+import type { EventArgs } from './args/index.js';
+import { Event } from './index.js';
+import type { EventCallback } from './types.js';
 
 /**
  * A handler that provides subscribable, public events.
@@ -14,7 +14,10 @@ import type { EventCallback } from './types';
  * @template TSender
  * @template TArgs
  */
-export class EventHandler<TSender, TArgs extends EventArgs | void = void> extends DisposableBase {
+export class EventHandler<
+  TSender,
+  TArgs extends EventArgs | void = void
+> extends DisposableBase {
   private _callbacks: Dictionary<EventCallback<TSender, TArgs>>;
   private _event: Event<TSender, TArgs> | undefined;
   private _detachEvent: (() => void) | undefined;
@@ -25,7 +28,7 @@ export class EventHandler<TSender, TArgs extends EventArgs | void = void> extend
     this._event = new Event(
       (...args_) => this.subscribe(...args_),
       (...args_) => this.unsubscribe(...args_),
-      detachEvent_ => {
+      (detachEvent_) => {
         this._detachEvent = detachEvent_;
       }
     );
@@ -57,7 +60,10 @@ export class EventHandler<TSender, TArgs extends EventArgs | void = void> extend
     }
   }
 
-  private subscribe(identifier_: string, callback_: EventCallback<TSender, TArgs>): boolean {
+  private subscribe(
+    identifier_: string,
+    callback_: EventCallback<TSender, TArgs>
+  ): boolean {
     if (identifier_ in this._callbacks) {
       return false;
     }

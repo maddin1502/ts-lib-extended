@@ -5,8 +5,6 @@
  * @class EventArgs
  * @template TValue
  */
-export class EventArgs<TValue = any>  {
-  constructor(
-    public readonly value: TValue
-  ) {}
+export class EventArgs<TValue = any> {
+  constructor(public readonly value: TValue) {}
 }
