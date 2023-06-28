@@ -1,37 +1,37 @@
-import { EnumerableObject } from './enumerable';
+import { EnumerableObject } from './enumerable.js';
 
-export type { ArrayItem, MinArray } from './array';
+export type { ArrayItem, MinArray } from './array.js';
 export type {
   AbstractConstructor,
   Constructor,
   ConstructorInstance,
   ConstructorParameters,
   StandardConstructor
-} from './constructor';
+} from './constructor.js';
 export type {
   Dictionary,
   DictionaryKey,
   DictionaryValue,
   ReadonlyDictionary
-} from './dictionary';
-export { Disposable } from './disposable';
-export { DisposableBase } from './disposable/base';
+} from './dictionary.js';
+export { DisposableBase } from './disposable/base.js';
+export { Disposable } from './disposable/index.js';
 export type {
   Enumerable,
   EnumerableBase,
   EnumerableEntry,
   EnumerableValue
-} from './enumerable';
-export { Event } from './event';
-export { EventArgs } from './event/args';
-export { CancelEventArgs } from './event/args/cancel';
-export { EventHandler } from './event/handler';
+} from './enumerable.js';
+export { CancelEventArgs } from './event/args/cancel.js';
+export { EventArgs } from './event/args/index.js';
+export { EventHandler } from './event/handler.js';
+export { Event } from './event/index.js';
 export type {
   EventCallback,
   EventSubscription,
   EventUnsubscription
-} from './event/types';
-export type { PublicMembers } from './mapping';
+} from './event/types.js';
+export type { PublicMembers } from './mapping.js';
 export { EnumerableObject };
 
 export const enumerableObject = new EnumerableObject();

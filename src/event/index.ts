@@ -1,5 +1,5 @@
-import type { EventArgs } from './args';
-import type { EventSubscription, EventUnsubscription } from './types';
+import type { EventArgs } from './args/index.js';
+import type { EventSubscription, EventUnsubscription } from './types.js';
 
 /**
  * Subscribable listener to certain events

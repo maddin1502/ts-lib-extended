@@ -1,12 +1,12 @@
 {
   "name": "ts-lib-extended",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "Additional types and tools for typescript",
   "files": [
     "dist"
   ],
-  "module": "dist",
-  "types": "dist",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "type": "module",
   "scripts": {
     "build": "tsc -p ./tsconfig.prod.json",

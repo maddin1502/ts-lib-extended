@@ -12,7 +12,9 @@ export abstract class DisposableBase {
     this._isDisposed = false;
   }
 
-  public get isDisposed(): boolean { return this._isDisposed; }
+  public get isDisposed(): boolean {
+    return this._isDisposed;
+  }
 
   /**
    * Dispose the instance (cleanup internals). The instance should and can no longer be used afterwards
