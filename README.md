@@ -244,3 +244,31 @@ console.log(enumarableObject.values(NumberEnum)) // [0, 1]
 console.log(Object.entries(NumberEnum)) // [["0", "e1"], ["1", "e2"], ["e1", 0], ["e2", 1]]
 console.log(enumarableObject.entries(NumberEnum)) // [["e1", 0], ["e2", 1]]
 ```
+
+# "Empty Object" type
+
+Sometimes you need a `this object is empty`-type (e.g. as a default assignment for generics). Unfortunately, this cannot be achieved with `{}` ([detailed explanation](https://mercury.com/blog/creating-an-emptyobject-type-in-typescript)).
+
+```ts
+import type { EmptyObject } from 'ts-lib-extended';
+
+type CustomParameters = Record<string, any>;
+
+abstract class Special<T extends CustomParameters = EmptyObject> {
+    public abstract doSomething(params_?: T): void;
+}
+
+type ValueParameters = { value: string };
+
+class SpecialWithParams<T extends ValueParameters> extends Special<T> {
+    public doSomething(params_?: T): void {
+        /* do something */
+    }
+}
+
+class SpecialWithoutParams extends Special {
+    public doSomething(params_?: EmptyObject): void {
+        /* without the generic type "params_" is unusable (and can be omitted) */
+    }
+}
+```

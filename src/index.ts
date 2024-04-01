@@ -16,6 +16,7 @@ export type {
 } from './dictionary.js';
 export { DisposableBase } from './disposable/base.js';
 export { Disposable } from './disposable/index.js';
+export type { EmptyObject } from './emptyObject.js';
 export type {
   Enumerable,
   EnumerableBase,
