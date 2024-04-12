@@ -1,6 +1,5 @@
 import type { EventArgs } from './args/index.js';
 
-
 export type EventSubscription<
   TSender,
   TArgs extends EventArgs | void = void

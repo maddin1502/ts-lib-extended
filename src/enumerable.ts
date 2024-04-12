@@ -35,10 +35,10 @@ export class EnumerableObject {
   /**
    * Gain enum values (equivalent to Object.values(...))
    *
-   * @template E
+   * @public
+   * @template {Enumerable} E
    * @param {E} enum_
-   * @return {*}  {ReadonlyArray<EnumerableValue<E>>}
-   * @memberof EnumerableObject
+   * @returns {ReadonlyArray<EnumerableValue<E>>}
    */
   public values<E extends Enumerable>(
     enum_: E
@@ -55,10 +55,10 @@ export class EnumerableObject {
   /**
    * Gain enum keys (equivalent to Object.keys(...))
    *
-   * @template E
+   * @public
+   * @template {Enumerable} E
    * @param {E} enum_
-   * @return {*}  {ReadonlyArray<keyof E>}
-   * @memberof EnumerableObject
+   * @returns {ReadonlyArray<keyof E>}
    */
   public keys<E extends Enumerable>(enum_: E): ReadonlyArray<keyof E> {
     const keys: (keyof E)[] = [];
@@ -71,10 +71,10 @@ export class EnumerableObject {
   /**
    * Gain enum entries (equivalent to Object.entries(...))
    *
-   * @template E
+   * @public
+   * @template {Enumerable} E
    * @param {E} enum_
-   * @return {*}  {ReadonlyArray<EnumerableEntry<E>>}
-   * @memberof EnumerableObject
+   * @returns {ReadonlyArray<EnumerableEntry<E>>}
    */
   public entries<E extends Enumerable>(
     enum_: E
