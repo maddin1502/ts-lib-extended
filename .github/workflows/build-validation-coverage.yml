@@ -28,7 +28,7 @@ jobs:
       - name: Install Deps
         run: npm install
       - name: Test
-        run: npm run test:coverage
+        run: npm run test
       - name: Generate upload artifact name
         run: |
           name=$(echo -n "${{ matrix.branch }}" | sed -e 's/[ \t:\/\\"<>|*?]/-/g' -e 's/--*/-/g')
