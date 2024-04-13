@@ -5,8 +5,8 @@ import { EventArgs } from './index.js';
  *
  * @export
  * @class CancelEventArgs
+ * @template [TValue=any]
  * @extends {EventArgs<TValue>}
- * @template TValue
  */
 export class CancelEventArgs<TValue = any> extends EventArgs<TValue> {
   constructor(value_: TValue) {

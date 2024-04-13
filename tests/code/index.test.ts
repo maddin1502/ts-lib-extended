@@ -1,13 +1,13 @@
-import { describe, expect, test } from 'vitest';
 import {
   CancelEventArgs,
   Disposable,
   DisposableBase,
   EnumerableObject,
-  enumerableObject,
   Event,
-  EventArgs
-} from '../../src';
+  EventArgs,
+  enumerableObject
+} from '@/index.js';
+import { describe, expect, test } from 'vitest';
 
 describe('main', () => {
   test('exports', () => {

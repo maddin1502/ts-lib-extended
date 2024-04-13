@@ -1,9 +1,9 @@
+import { Disposable } from '@/disposable/index.js';
+import { CancelEventArgs } from '@/event/args/cancel.js';
+import { EventArgs } from '@/event/args/index.js';
+import { EventHandler } from '@/event/handler.js';
+import { Event } from '@/event/index.js';
 import { describe, expect, test } from 'vitest';
-import { Disposable } from '../../src/disposable';
-import { Event } from '../../src/event';
-import { EventArgs } from '../../src/event/args';
-import { CancelEventArgs } from '../../src/event/args/cancel';
-import { EventHandler } from '../../src/event/handler';
 
 class TestSubject extends Disposable {
   private _valueChangingHandler: EventHandler<
@@ -122,7 +122,7 @@ describe(TestSubject.name, () => {
       });
     }).toThrow();
     expect(() =>
-    // will throw on getting "changed" event
+      // will throw on getting "changed" event
       subject.changed.subscribe('y', () => {
         /** */
       })

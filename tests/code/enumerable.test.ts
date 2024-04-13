@@ -1,5 +1,5 @@
+import { EnumerableObject } from '@/enumerable.js';
 import { describe, expect, test } from 'vitest';
-import { EnumerableObject } from '../../src/enumerable';
 
 enum MixedEnum {
   a = 'foo',

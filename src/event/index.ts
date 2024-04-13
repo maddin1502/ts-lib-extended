@@ -7,7 +7,7 @@ import type { EventSubscription, EventUnsubscription } from './types.js';
  * @export
  * @class Event
  * @template TSender
- * @template TArgs
+ * @template {EventArgs | void} [TArgs=void]
  */
 export class Event<TSender, TArgs extends EventArgs | void = void> {
   private _subscription:

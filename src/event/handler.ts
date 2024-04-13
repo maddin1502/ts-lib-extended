@@ -10,9 +10,9 @@ import type { EventCallback } from './types.js';
  *
  * @export
  * @class EventHandler
- * @extends {DisposableBase}
  * @template TSender
- * @template TArgs
+ * @template {EventArgs | void} [TArgs=void]
+ * @extends {DisposableBase}
  */
 export class EventHandler<
   TSender,
