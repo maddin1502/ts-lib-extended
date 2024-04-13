@@ -20,5 +20,7 @@ jobs:
         run: npm i
       - name: Validate (build, test)
         run: npm run build:validate
+      - name: Publish package
+        run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}

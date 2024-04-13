@@ -15,12 +15,12 @@ export default defineConfig({
       clean: true,
       cleanOnRerun: true,
       reportOnFailure: true,
-      // thresholds: {
-      //   lines: 90,
-      //   branches: 90,
-      //   functions: 90,
-      //   statements: 90
-      // }
+      thresholds: {
+        lines: 90,
+        branches: 90,
+        functions: 90,
+        statements: 90
+      }
     },
     reporters: ['default', 'junit'],
     dir: './tests',
