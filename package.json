@@ -1,6 +1,6 @@
 {
   "name": "ts-lib-extended",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Additional types and tools for typescript",
   "files": [
     "dist"
@@ -14,7 +14,7 @@
     "build:validate": "npm run build && npm test",
     "lint": "eslint src",
     "lint:fix": "npm run lint -- --fix",
-    "test": "vitest run --coverage",
+    "test": "vitest run",
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui",
     "test:watch": "vitest watch",
