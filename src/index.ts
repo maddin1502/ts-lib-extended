@@ -1,5 +1,6 @@
 import { EnumerableObject } from './enumerable.js';
 
+export type * from '@/shape.js';
 export type { ArrayItem, MinArray } from './array.js';
 export type {
   AbstractConstructor,
