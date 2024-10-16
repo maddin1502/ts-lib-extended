@@ -1,2 +1,2 @@
 const empty = Symbol();
-export type EmptyObject = {[empty]?: never};
+export type EmptyObject = { [empty]?: never };
