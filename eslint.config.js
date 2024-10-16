@@ -1,33 +1,17 @@
-import { FlatCompat } from '@eslint/eslintrc';
-import js from '@eslint/js';
-import typescriptEslint from '@typescript-eslint/eslint-plugin';
-import tsParser from '@typescript-eslint/parser';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-  recommendedConfig: js.configs.recommended,
-  allConfig: js.configs.all
-});
+import globals from 'globals';
+import pluginJs from '@eslint/js';
+import tseslint, { parser } from 'typescript-eslint';
 
 export default [
   {
-    ignores: ['*', '!src']
+    ignores: ['*', '!src', '!vitest.config.ts']
   },
-  ...compat.extends(
-    'plugin:@typescript-eslint/recommended',
-    'plugin:@typescript-eslint/recommended-requiring-type-checking'
-  ),
+  pluginJs.configs.recommended,
+  ...tseslint.configs.recommended,
   {
-    plugins: {
-      '@typescript-eslint': typescriptEslint
-    },
-
     languageOptions: {
-      parser: tsParser,
+      globals: { ...globals.browser, ...globals.node },
+      parser: parser,
       ecmaVersion: 5,
       sourceType: 'module',
 
@@ -35,7 +19,6 @@ export default [
         project: ['tsconfig.json']
       }
     },
-
     rules: {
       '@typescript-eslint/array-type': 'off',
       '@typescript-eslint/consistent-type-assertions': 'warn',
@@ -58,7 +41,6 @@ export default [
       quotes: ['warn', 'single'],
       semi: 'off',
       'no-unused-vars': 'off',
-
       '@typescript-eslint/no-unused-vars': [
         'warn',
         {
