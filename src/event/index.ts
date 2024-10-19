@@ -36,6 +36,7 @@ export class Event<TSender, TArgs extends EventArgs | void = void> {
    * @readonly
    * @type {EventSubscription<TSender, TArgs>}
    * @memberof Event
+   * @since 1.0.0
    */
   public get subscribe(): EventSubscription<TSender, TArgs> {
     return this.validateDetached(this._subscription?.subscribe);
@@ -47,6 +48,7 @@ export class Event<TSender, TArgs extends EventArgs | void = void> {
    * @readonly
    * @type {EventUnsubscription}
    * @memberof Event
+   * @since 1.0.0
    */
   public get unsubscribe(): EventUnsubscription {
     return this.validateDetached(this._subscription?.unsubscribe);
