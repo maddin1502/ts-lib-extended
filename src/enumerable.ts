@@ -1,16 +1,45 @@
-export type Enumerable<T = any> = {
-  [id: string]: T | string;
+/**
+ * enum type representation
+ *
+ * ```ts
+ * enum MyEnum { a, b }
+ *
+ * function doMagic(enum: Enumerable): void { ... }
+ *
+ * doMagic(MyEnum)
+ * ```
+ *
+ * @export
+ * @since 1.0.0
+ */
+export type Enumerable = {
+  [id: string]: number | string;
   [nu: number]: string;
 };
 
-export type EnumerableValue<TEnum extends Enumerable = Enumerable> =
-  TEnum extends Record<infer K, infer V>
-    ? K extends string
-      ? V
-      : never
-    : never;
+type EnumerableValue<TEnum extends Enumerable> = TEnum extends Record<
+  infer K,
+  infer V
+>
+  ? K extends string
+    ? V
+    : never
+  : never;
 
-export type EnumerableBase<TEnumValue extends EnumerableValue> =
+/**
+ * enum values base type
+ *
+ * ```
+ * String Enum => string
+ * Numeric Enum => number
+ * Heterogeneous Enum => string | number
+ * ```
+ *
+ * @export
+ * @template {EnumerableValue<Enumerable>} TEnumValue
+ * @since 1.1.5
+ */
+export type EnumerableBase<TEnumValue extends EnumerableValue<Enumerable>> =
   TEnumValue extends string
     ? TEnumValue extends number
       ? string | number
@@ -30,6 +59,7 @@ export type EnumerableEntry<E extends Enumerable> = [
  *
  * @export
  * @class EnumerableObject
+ * @since 1.2.0
  */
 export class EnumerableObject {
   /**
@@ -39,6 +69,7 @@ export class EnumerableObject {
    * @template {Enumerable} E
    * @param {E} enum_
    * @returns {ReadonlyArray<EnumerableValue<E>>}
+   * @since 1.2.0
    */
   public values<E extends Enumerable>(
     enum_: E
@@ -59,6 +90,7 @@ export class EnumerableObject {
    * @template {Enumerable} E
    * @param {E} enum_
    * @returns {ReadonlyArray<keyof E>}
+   * @since 1.2.0
    */
   public keys<E extends Enumerable>(enum_: E): ReadonlyArray<keyof E> {
     const keys: (keyof E)[] = [];
@@ -75,6 +107,7 @@ export class EnumerableObject {
    * @template {Enumerable} E
    * @param {E} enum_
    * @returns {ReadonlyArray<EnumerableEntry<E>>}
+   * @since 1.2.0
    */
   public entries<E extends Enumerable>(
     enum_: E

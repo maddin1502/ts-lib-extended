@@ -8,6 +8,7 @@ import { DisposableBase } from './base.js';
  * @export
  * @class Disposable
  * @extends {DisposableBase}
+ * @since 1.0.0
  */
 export class Disposable extends DisposableBase {
   private _disposingHandler: EventHandler<this>;
@@ -27,6 +28,7 @@ export class Disposable extends DisposableBase {
    * @readonly
    * @type {Event<this>}
    * @memberof Disposable
+   * @since 1.0.0
    */
   public get disposing(): Event<this> {
     return this._disposingHandler.event;
@@ -38,6 +40,7 @@ export class Disposable extends DisposableBase {
    * @readonly
    * @type {Event<this>}
    * @memberof Disposable
+   * @since 1.0.0
    */
   public get disposed(): Event<this> {
     return this._disposedHandler.event;

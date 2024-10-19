@@ -21,8 +21,7 @@ export type { EmptyObject } from './emptyObject.js';
 export type {
   Enumerable,
   EnumerableBase,
-  EnumerableEntry,
-  EnumerableValue
+  EnumerableEntry
 } from './enumerable.js';
 export { CancelEventArgs } from './event/args/cancel.js';
 export { EventArgs } from './event/args/index.js';
