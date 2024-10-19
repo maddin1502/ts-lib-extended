@@ -1,11 +1,12 @@
-export type StandardConstructor<T = any, A extends any[] = any[]> = new (
-  ...args: A
-) => T;
+export type StandardConstructor<
+  T = unknown,
+  A extends unknown[] = unknown[]
+> = new (...args: A) => T;
 export type AbstractConstructor<
-  T = any,
-  A extends any[] = any[]
+  T = unknown,
+  A extends unknown[] = unknown[]
 > = abstract new (...params: A) => T;
-export type Constructor<T = any> =
+export type Constructor<T = unknown> =
   | StandardConstructor<T>
   | AbstractConstructor<T>;
 export type ConstructorInstance<C extends Constructor> =
@@ -15,8 +16,8 @@ export type ConstructorInstance<C extends Constructor> =
     ? Instance
     : never;
 export type ConstructorParameters<C extends Constructor> =
-  C extends StandardConstructor<any, infer Arguments>
+  C extends StandardConstructor<unknown, infer Arguments>
     ? Arguments
-    : C extends AbstractConstructor<any, infer Arguments>
+    : C extends AbstractConstructor<unknown, infer Arguments>
     ? Arguments
     : never;
