@@ -8,9 +8,9 @@ import { describe, expect, test } from 'vitest';
 class TestSubject extends Disposable {
   private _valueChangingHandler: EventHandler<
     this,
-    CancelEventArgs<{ old: number; new: number }>
+    CancelEventArgs<[number, number]>
   >;
-  private _valueChangedHandler: EventHandler<this, EventArgs<number>>;
+  private _valueChangedHandler: EventHandler<this, EventArgs<[number]>>;
   private _value: number;
 
   constructor(initValue_: number) {
@@ -24,14 +24,11 @@ class TestSubject extends Disposable {
     });
   }
 
-  public get changing(): Event<
-    this,
-    CancelEventArgs<{ old: number; new: number }>
-  > {
+  public get changing(): Event<this, CancelEventArgs<[number, number]>> {
     return this._valueChangingHandler.event;
   }
 
-  public get changed(): Event<this, EventArgs<number>> {
+  public get changed(): Event<this, EventArgs<[number]>> {
     return this._valueChangedHandler.event;
   }
 
@@ -39,10 +36,7 @@ class TestSubject extends Disposable {
     return this._value;
   }
   public set value(new_: number) {
-    const cancelArgs = new CancelEventArgs<{ old: number; new: number }>({
-      old: this._value,
-      new: new_
-    });
+    const cancelArgs = new CancelEventArgs(this._value, new_);
     this._valueChangingHandler.invoke(this, cancelArgs);
 
     if (cancelArgs.cancel) {
@@ -50,7 +44,7 @@ class TestSubject extends Disposable {
     }
 
     this._value = new_;
-    this._valueChangedHandler.invoke(this, new EventArgs<number>(new_));
+    this._valueChangedHandler.invoke(this, new EventArgs(new_));
   }
 }
 
@@ -68,14 +62,14 @@ describe(TestSubject.name, () => {
       subject.changing.subscribe('changing', (sender_, args_) => {
         expect(subject === sender_).toBe(true);
         changingCount++;
-        args_.cancel = args_.value.new === 21;
+        args_.cancel = args_.args[1] === 21;
       })
     ).toBe(true);
     expect(
       subject.changed.subscribe('changed', (sender_, args_) => {
         expect(subject === sender_).toBe(true);
         changedCount++;
-        expect(args_.value).toBe(123456789);
+        expect(args_.args[0]).toBe(123456789);
       })
     ).toBe(true);
 

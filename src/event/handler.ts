@@ -13,6 +13,7 @@ import type { EventCallback } from './types.js';
  * @template TSender
  * @template {EventArgs | void} [TArgs=void]
  * @extends {DisposableBase}
+ * @since 1.0.0
  */
 export class EventHandler<
   TSender,
@@ -40,6 +41,7 @@ export class EventHandler<
    * @readonly
    * @type {Event<TSender, TArgs>}
    * @memberof EventHandler
+   * @since 1.0.0
    */
   public get event(): Event<TSender, TArgs> {
     return this.validateDisposed(this._event);
@@ -51,6 +53,7 @@ export class EventHandler<
    * @param {TSender} sender_
    * @param {TArgs} eventArgs_
    * @memberof EventHandler
+   * @since 1.0.0
    */
   public invoke(sender_: TSender, eventArgs_: TArgs): void {
     const keys = Object.keys(this._callbacks);

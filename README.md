@@ -6,25 +6,21 @@
 [![npm downloads](https://badgen.net/npm/dw/ts-lib-extended)](https://badge.fury.io/js/ts-lib-extended)
 
 ## Features
-- Enum type
+- Enum type (key and value extraction - ignores reveres mapping)
 - Dictionary types (safe, readonly, key + value types)
 - Constructor types (abstract, standard, parameter + instance types)
 - Core class for disposable instances
-- Events (handler, args)
+- Events (handler, args, cancellation, external subscription + internal invocation)
 - Array types (minimal length array, item type)
+- Enforce Empty Object type (only allows the assignment of empty objects)
 
 ## Installation
 ```bash
 npm i ts-lib-extended
 ```
-or
-```bash
-yarn add ts-lib-extended
-```
-
 ## Events
 
-With events it is possible to subscribe to specific action or change on an instance.
+With events it is possible to subscribe to a specific action or change on an instance.
 This is inspired by C# and should work in a similar way.
 
 ```ts
@@ -215,12 +211,12 @@ enum NumberEnum {
   bruce
 }
 
-function doSomethingWithEnum({}: Enumerable<string>): void {
+function doSomethingWithEnum(enum_: Enumerable): void {
   /** crazy code here */
 }
 
-doSomethingWithEnum(NumberEnum); // TS Error - function argument is limited to string enum type
-doSomethingWithEnum(MyEnum); // NO error
+doSomethingWithEnum(NumberEnum);
+doSomethingWithEnum(MyEnum);
 ```
 
 ## Gain keys and values
