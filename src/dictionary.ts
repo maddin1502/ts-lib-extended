@@ -23,7 +23,6 @@ export type ReadonlyDictionary<
   K extends string | number = string
 > = Readonly<Dictionary<T, K>>;
 
-
 /**
  * type of dictionary keys
  *
