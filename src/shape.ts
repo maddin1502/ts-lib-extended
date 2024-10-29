@@ -6,6 +6,20 @@
  */
 export type MethodLike = (...args_: any[]) => unknown;
 
+type NotAFunction =
+  | {
+      caller?: void;
+    }
+  | {
+      bind?: void;
+    }
+  | {
+      apply?: void;
+    }
+  | {
+      call?: void;
+    };
+
 /**
  * cover all class instances, records an anonymus objects
  *
@@ -13,21 +27,7 @@ export type MethodLike = (...args_: any[]) => unknown;
  * @export
  * @since 4.0.0
  */
-export type InstanceLike = Record<PropertyKey, any> &
-  (
-    | {
-        caller?: void;
-      }
-    | {
-        bind?: void;
-      }
-    | {
-        apply?: void;
-      }
-    | {
-        call?: void;
-      }
-  );
+export type InstanceLike = Record<PropertyKey, any> & NotAFunction;
 
 /**
  * cover all types like "any" or "unknown"
