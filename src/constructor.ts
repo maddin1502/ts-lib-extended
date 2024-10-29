@@ -3,32 +3,26 @@
  *
  * @export
  * @template [T=unknown]
- * @template {unknown[]} [A=unknown[]]
  * @since 1.0.0
  */
-export type StandardConstructor<
-  T = unknown,
-  A extends unknown[] = unknown[]
-> = new (...args: A) => T;
+export type StandardConstructor<T = unknown> = new (...args: any[]) => T;
 
 /**
  * abstract class constructor
  *
  * @export
- * @template [T=unknown]
- * @template {unknown[]} [A=unknown[]]
+ * @template [T=unkown]
  * @since 1.0.0
  */
-export type AbstractConstructor<
-  T = unknown,
-  A extends unknown[] = unknown[]
-> = abstract new (...params: A) => T;
+export type AbstractConstructor<T = unknown> = abstract new (
+  ...params: any[]
+) => T;
 
 /**
  * abstract or non-abstract class constructor
  *
  * @export
- * @template [T=unknown]
+ * @template [T=any]
  * @since 1.0.0
  */
 export type Constructor<T = unknown> =
@@ -47,18 +41,4 @@ export type ConstructorInstance<C extends Constructor> =
     ? Instance
     : C extends AbstractConstructor<infer Instance>
     ? Instance
-    : never;
-
-/**
- * Required parameters to create an instance with a constructor
- *
- * @export
- * @template {Constructor} C
- * @since 1.0.0
- */
-export type ConstructorParameters<C extends Constructor> =
-  C extends StandardConstructor<unknown, infer Arguments>
-    ? Arguments
-    : C extends AbstractConstructor<unknown, infer Arguments>
-    ? Arguments
     : never;

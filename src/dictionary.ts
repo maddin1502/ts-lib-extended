@@ -35,7 +35,7 @@ export type DictionaryKey<D> = D extends Dictionary<unknown, infer P>
   : never;
 
 /**
- * type of dictionary keys
+ * type of dictionary values
  *
  * @export
  * @template D

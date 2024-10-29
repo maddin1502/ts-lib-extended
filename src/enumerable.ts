@@ -1,3 +1,5 @@
+import type { Prettify } from './mapping.js';
+
 /**
  * enum type representation
  *
@@ -17,14 +19,21 @@ export type Enumerable = {
   [nu: number]: string;
 };
 
-type EnumerableValue<TEnum extends Enumerable> = TEnum extends Record<
-  infer K,
-  infer V
->
-  ? K extends string
-    ? V
-    : never
-  : never;
+/**
+ * enum values type
+ *
+ * ```
+ * enum MyEnum { a, b }
+ * EnumerableValue<typeof MyEnum> => MyEnum.a | MyEnum.b
+ * ```
+ *
+ * @export
+ * @template {Enumerable} TEnum
+ * @since 1.1.5
+ */
+export type EnumerableValue<TEnum extends Enumerable> = Prettify<
+  TEnum[keyof TEnum]
+>;
 
 /**
  * enum values base type
@@ -48,10 +57,18 @@ export type EnumerableBase<TEnumValue extends EnumerableValue<Enumerable>> =
     ? number
     : never;
 
-export type EnumerableEntry<E extends Enumerable> = [
-  keyof E,
-  EnumerableValue<E>
-];
+/**
+ * tuple of enum key and associated value
+ *
+ * @export
+ * @template {Enumerable} E
+ * @since 1.2.0
+ */
+export type EnumerableEntry<E extends Enumerable> = {
+  [key in keyof E]: [key, E[key]];
+} extends Record<PropertyKey, infer P>
+  ? Exclude<P, [number, string]>
+  : never;
 
 /**
  * Gain keys and values from enum instances. Works with string, numeric and mixed enums
@@ -76,9 +93,7 @@ export class EnumerableObject {
   ): ReadonlyArray<EnumerableValue<E>> {
     const values: EnumerableValue<E>[] = [];
 
-    this.disassemble(enum_, (key_) =>
-      values.push(enum_[key_] as EnumerableValue<E>)
-    );
+    this.disassemble(enum_, (key_) => values.push(enum_[key_]));
 
     return values;
   }

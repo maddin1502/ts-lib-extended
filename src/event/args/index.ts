@@ -3,13 +3,13 @@
  *
  * @export
  * @class EventArgs
- * @template {unknown[]} [TValue=unknown[]]
+ * @template {unknown[]} [TArgs=unknown[]]
  * @since 1.0.0
  */
-export class EventArgs<TValue extends unknown[] = unknown[]> {
-  private _args: TValue;
+export class EventArgs<TArgs extends unknown[] = unknown[]> {
+  private _args: TArgs;
 
-  constructor(...args_: TValue) {
+  constructor(...args_: TArgs) {
     this._args = args_;
   }
 
@@ -18,10 +18,10 @@ export class EventArgs<TValue extends unknown[] = unknown[]> {
    *
    * @public
    * @readonly
-   * @type {TValue}
+   * @type {TArgs}
    * @since 4.0.0
    */
-  public get args(): TValue {
+  public get args(): TArgs {
     return this._args;
   }
 }

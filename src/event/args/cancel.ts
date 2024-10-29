@@ -5,14 +5,14 @@ import { EventArgs } from './index.js';
  *
  * @export
  * @class CancelEventArgs
- * @template {unknown[]} [TValue=unknown[]]
- * @extends {EventArgs<TValue>}
+ * @template {unknown[]} [TArgs=unknown[]]
+ * @extends {EventArgs<TArgs>}
  * @since 1.0.0
  */
 export class CancelEventArgs<
-  TValue extends unknown[] = unknown[]
-> extends EventArgs<TValue> {
-  constructor(...args_: TValue) {
+  TArgs extends unknown[] = unknown[]
+> extends EventArgs<TArgs> {
+  constructor(...args_: TArgs) {
     super(...args_);
     this.cancel = false;
   }
