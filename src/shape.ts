@@ -21,7 +21,7 @@ type NotAFunction =
     };
 
 /**
- * cover all class instances, records an anonymus objects
+ * cover all class instances, records, anonymus objects and arrays
  *
  * @alias ObjectLike (on legacy versions)
  * @export
