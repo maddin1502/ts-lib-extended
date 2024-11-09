@@ -268,3 +268,65 @@ class SpecialWithoutParams extends Special {
     }
 }
 ```
+
+# Scoping
+
+Extend your classes from ScopedInstanceCore to get quick access to scopes. Scopes allow you to create a tree structure within your class instance. Variants can be used to create custom instances per scope.
+
+```ts
+class MyClass extends ScopedInstanceCore<MyClass, 'dark' | 'light'> {
+  constructor(public readonly user?: string) {
+    super();
+  }
+
+  protected disposeScope(scope_: MyClassScope): void {
+    scope_.variants.forEach((v_) => v_.dispose());
+  }
+
+  protected createScope(id_: PropertyKey): MyClassScope {
+    return new MyClassScope(id_);
+  }
+}
+
+class MyClassScope implements InstanceScope<MyClass, 'dark' | 'light'> {
+  constructor(private _scopeId: PropertyKey) {}
+
+  private dark_: MyClass | undefined;
+  private light_: MyClass | undefined;
+
+  public get dark(): MyClass {
+    return (this.dark_ ??= new MyClass(
+      this._scopeId === 'starwars' ? 'Anakin Skywalker' : 'Riku'
+    ));
+  }
+
+  public get light(): MyClass {
+    return (this.light_ ??= new MyClass(
+      this._scopeId === 'starwars' ? 'Luke Skywalker' : 'Sora'
+    ));
+  }
+
+  public get variants(): MyClass[] {
+    const v: MyClass[] = [];
+
+    if (this.dark_) {
+      v.push(this.dark_);
+    }
+
+    if (this.light_) {
+      v.push(this.light_);
+    }
+
+    return v;
+  }
+}
+
+const mc = new MyClass();
+const starwarsScope = mc.scope('starwars');
+starwarsScope.dark.user; // => Anakin Skywalker
+starwarsScope.light.user; // => Luke Skywalker
+
+const kingdomheartsScope = mc.scope('kingdomhearts'); // or any other scope id
+kingdomheartsScope.dark.user; // => Riku
+kingdomheartsScope.light.user; // => Sora
+```

@@ -13,6 +13,8 @@ export { EventHandler } from './event/handler.js';
 export { Event } from './event/index.js';
 export type * from './event/types.js';
 export type * from './mapping.js';
+export type * from './scope.js';
+export { ScopedInstanceCore } from './scope.js';
 export type * from './shape.js';
 export { EnumerableObject };
 
