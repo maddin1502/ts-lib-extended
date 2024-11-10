@@ -1,37 +1,30 @@
-import { ScopedInstanceCore, type InstanceScope } from '@/scope.js';
+import {
+  InstanceScopeCore,
+  ScopedInstanceCore,
+  type InstanceScope
+} from '@/scope.js';
 import { describe, expect, test } from 'vitest';
 
 type TestVariant = 'a' | 'b';
 
-class TestScope implements InstanceScope<Test, TestVariant> {
-  private a_: Test | undefined;
-  private b_: Test | undefined;
-
-  constructor(
-    public readonly id: PropertyKey,
-    private createInstance_: (variant_: TestVariant) => Test
-  ) {}
-
+class TestScope
+  extends InstanceScopeCore<Test, TestVariant>
+  implements InstanceScope<Test, TestVariant>
+{
   public get a(): Test {
-    return (this.a_ ??= this.createInstance_('a'));
+    return this.getOrCreateInstance('a');
   }
 
   public get b(): Test {
-    return (this.b_ ??= this.createInstance_('b'));
+    return this.getOrCreateInstance('b');
   }
 
-  public get variants(): Test[] {
-    const v: Test[] = [];
+  protected createInstance(variant_: TestVariant): Test {
+    return new Test(this.scopeId, variant_);
+  }
 
-    if (this.a_) {
-      v.push(this.a_);
-    }
-
-    if (this.b_) {
-      v.push(this.b_);
-    }
-
-    return v;
+  protected disposeInstance(instance_: Test): void {
+    instance_.dispose();
   }
 }
 
@@ -44,15 +37,15 @@ class Test extends ScopedInstanceCore<Test, TestVariant> {
   }
 
   protected disposeScope(scope_: TestScope): void {
-    scope_.variants.forEach((v_) => v_.dispose());
+    scope_.dispose();
   }
   protected createScope(id_: PropertyKey): TestScope {
-    return new TestScope(id_, (variant_) => new Test(id_, variant_));
+    return new TestScope(id_);
   }
 }
 
 describe(ScopedInstanceCore, () => {
-  test('scoping', () => {
+  test('general', () => {
     expect.assertions(15);
     const test = new Test('root', 'root');
     expect(test.scopes.length).toBe(0);
@@ -77,5 +70,30 @@ describe(ScopedInstanceCore, () => {
     expect(test.isDisposed).toBe(true);
     expect(scope1variantA.isDisposed).toBe(true);
     expect(scope1variantB.isDisposed).toBe(true);
+  });
+});
+
+describe(InstanceScopeCore, () => {
+  test('general', () => {
+    expect.assertions(13);
+    const scope = new TestScope('root');
+
+    expect(scope.variants.length).toBe(0);
+    const variantA = scope.a;
+    expect(variantA.id).toBe('root');
+    expect(variantA.variant).toBe('a');
+    expect(scope.variants.length).toBe(1);
+    const variantB = scope.b;
+    expect(variantB.id).toBe('root');
+    expect(variantB.variant).toBe('b');
+    expect(scope.variants.length).toBe(2);
+
+    expect(scope.isDisposed).toBe(false);
+    expect(variantA.isDisposed).toBe(false)
+    expect(variantB.isDisposed).toBe(false)
+    scope.dispose();
+    expect(scope.isDisposed).toBe(true);
+    expect(variantA.isDisposed).toBe(true)
+    expect(variantB.isDisposed).toBe(true)
   });
 });

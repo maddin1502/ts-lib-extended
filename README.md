@@ -274,7 +274,15 @@ class SpecialWithoutParams extends Special {
 Extend your classes from ScopedInstanceCore to get quick access to scopes. Scopes allow you to create a tree structure within your class instance. Variants can be used to create custom instances per scope.
 
 ```ts
-class MyClass extends ScopedInstanceCore<MyClass, 'dark' | 'light'> {
+import {
+  InstanceScopeCore,
+  ScopedInstanceCore,
+  type InstanceScope
+} from 'ts-lib-extended';
+
+type MyScopeVariants = 'dark' | 'light';
+
+class MyClass extends ScopedInstanceCore<MyClass, MyScopeVariants> {
   constructor(public readonly user?: string) {
     super();
   }
@@ -283,41 +291,47 @@ class MyClass extends ScopedInstanceCore<MyClass, 'dark' | 'light'> {
     scope_.variants.forEach((v_) => v_.dispose());
   }
 
-  protected createScope(id_: PropertyKey): MyClassScope {
-    return new MyClassScope(id_);
+  protected createScope(scopeId_: PropertyKey): MyClassScope {
+    return new MyClassScope(scopeId_);
   }
 }
 
-class MyClassScope implements InstanceScope<MyClass, 'dark' | 'light'> {
-  constructor(private _scopeId: PropertyKey) {}
-
-  private dark_: MyClass | undefined;
-  private light_: MyClass | undefined;
-
+class MyClassScope
+  extends InstanceScopeCore<MyClass, MyScopeVariants>
+  implements InstanceScope<MyClass, MyScopeVariants>
+{
   public get dark(): MyClass {
-    return (this.dark_ ??= new MyClass(
-      this._scopeId === 'starwars' ? 'Anakin Skywalker' : 'Riku'
-    ));
+    return this.getOrCreateInstance('dark');
   }
 
   public get light(): MyClass {
-    return (this.light_ ??= new MyClass(
-      this._scopeId === 'starwars' ? 'Luke Skywalker' : 'Sora'
-    ));
+    return this.getOrCreateInstance('light');
   }
 
-  public get variants(): MyClass[] {
-    const v: MyClass[] = [];
+  protected createInstance(variant_: MyScopeVariants): MyClass {
+    let user: string;
 
-    if (this.dark_) {
-      v.push(this.dark_);
+    console.log(this.scopeId, variant_)
+
+    if (variant_ === 'dark') {
+      if (this.scopeId === 'starwars') {
+        user = 'Anakin Skywalker';
+      } else {
+        user = 'Riku';
+      }
+    } else {
+      if (this.scopeId === 'starwars') {
+        user = 'Luke Skywalker';
+      } else {
+        user = 'Sora';
+      }
     }
 
-    if (this.light_) {
-      v.push(this.light_);
-    }
+    return new MyClass(user);
+  }
 
-    return v;
+  protected disposeInstance(instance_: MyClass): void {
+    instance_.dispose();
   }
 }
 
