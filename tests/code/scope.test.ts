@@ -28,7 +28,7 @@ class TestScope
   }
 }
 
-class Test extends ScopedInstanceCore<Test, TestVariant> {
+class Test extends ScopedInstanceCore<TestScope> {
   constructor(
     public readonly id: PropertyKey,
     public readonly variant: TestVariant | 'root'
@@ -89,11 +89,11 @@ describe(InstanceScopeCore, () => {
     expect(scope.variants.length).toBe(2);
 
     expect(scope.isDisposed).toBe(false);
-    expect(variantA.isDisposed).toBe(false)
-    expect(variantB.isDisposed).toBe(false)
+    expect(variantA.isDisposed).toBe(false);
+    expect(variantB.isDisposed).toBe(false);
     scope.dispose();
     expect(scope.isDisposed).toBe(true);
-    expect(variantA.isDisposed).toBe(true)
-    expect(variantB.isDisposed).toBe(true)
+    expect(variantA.isDisposed).toBe(true);
+    expect(variantB.isDisposed).toBe(true);
   });
 });

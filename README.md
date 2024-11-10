@@ -282,13 +282,13 @@ import {
 
 type MyScopeVariants = 'dark' | 'light';
 
-class MyClass extends ScopedInstanceCore<MyClass, MyScopeVariants> {
+class MyClass extends ScopedInstanceCore<MyClassScope> {
   constructor(public readonly user?: string) {
     super();
   }
 
   protected disposeScope(scope_: MyClassScope): void {
-    scope_.variants.forEach((v_) => v_.dispose());
+    scope_.dispose();
   }
 
   protected createScope(scopeId_: PropertyKey): MyClassScope {
@@ -311,7 +311,7 @@ class MyClassScope
   protected createInstance(variant_: MyScopeVariants): MyClass {
     let user: string;
 
-    console.log(this.scopeId, variant_)
+    console.log(this.scopeId, variant_);
 
     if (variant_ === 'dark') {
       if (this.scopeId === 'starwars') {

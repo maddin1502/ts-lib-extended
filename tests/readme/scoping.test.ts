@@ -7,7 +7,7 @@ import { describe, expect, test } from 'vitest';
 
 type MyScopeVariants = 'dark' | 'light';
 
-class MyClass extends ScopedInstanceCore<MyClass, MyScopeVariants> {
+class MyClass extends ScopedInstanceCore<MyClassScope> {
   constructor(public readonly user?: string) {
     super();
   }

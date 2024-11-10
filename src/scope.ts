@@ -1,18 +1,23 @@
 import { Disposable } from './disposable/index.js';
 
+/**
+ * @export
+ * @template T
+ * @since 4.0.0
+ */
 export type InstanceScopeVariants<T> = {
   variants: T[];
 };
 
 /**
- * scoped instance that can be split into different variants
+ * instance scope that can be split into different variants
  *
  * @export
  * @template T
  * @template {string} Variant instance variants (e.g. 'dark' | 'light')
  * @since 4.0.0
  */
-export type InstanceScope<T, Variant extends string> = {
+export type InstanceScope<T = any, Variant extends string = string> = {
   readonly [key in Variant]: T;
 } & InstanceScopeVariants<T>;
 
@@ -20,26 +25,19 @@ export type InstanceScope<T, Variant extends string> = {
  * scopes cache
  *
  * @export
- * @template T
- * @template {string} Variant instance variants (e.g. 'dark' | 'light')
+ * @template {InstanceScope} S
  * @since 4.0.0
  */
-export type ScopesSource<T, Variant extends string> = Map<
-  PropertyKey,
-  InstanceScope<T, Variant>
->;
+export type ScopesSource<S extends InstanceScope> = Map<PropertyKey, S>;
 
 /**
- * instance scope support
- *
  * @export
- * @template T
- * @template {string} Variant instance variants (e.g. 'dark' | 'light')
+ * @template {InstanceScope} S
  * @since 4.0.0
  */
-export type ScopedInstance<T, Variant extends string> = {
-  scope(id_: PropertyKey): InstanceScope<T, Variant>;
-  scopes: InstanceScope<T, Variant>[];
+export type ScopedInstance<S extends InstanceScope> = {
+  scope(id_: PropertyKey): S;
+  scopes: S[];
 };
 
 /**
@@ -48,17 +46,16 @@ export type ScopedInstance<T, Variant extends string> = {
  * @export
  * @abstract
  * @class ScopedInstanceCore
- * @template T
- * @template {string} Variant instance variants (e.g. 'dark' | 'light')
+ * @template {InstanceScope} S
  * @extends {Disposable}
- * @implements {ScopedInstance<T, Variant>}
+ * @implements {ScopedInstance<S>}
  * @since 4.0.0
  */
-export abstract class ScopedInstanceCore<T, Variant extends string>
+export abstract class ScopedInstanceCore<S extends InstanceScope>
   extends Disposable
-  implements ScopedInstance<T, Variant>
+  implements ScopedInstance<S>
 {
-  private readonly _source: ScopesSource<T, Variant>;
+  private readonly _source: ScopesSource<S>;
 
   constructor() {
     super();
@@ -70,11 +67,11 @@ export abstract class ScopedInstanceCore<T, Variant extends string>
     });
   }
 
-  protected abstract disposeScope(scope_: InstanceScope<T, Variant>): void;
+  protected abstract disposeScope(scope_: S): void;
 
-  protected abstract createScope(id_: PropertyKey): InstanceScope<T, Variant>;
+  protected abstract createScope(id_: PropertyKey): S;
 
-  public scope(id_: PropertyKey): InstanceScope<T, Variant> {
+  public scope(id_: PropertyKey): S {
     this.validateDisposed(this);
     let scope = this._source.get(id_);
 
@@ -86,7 +83,7 @@ export abstract class ScopedInstanceCore<T, Variant extends string>
     return scope;
   }
 
-  public get scopes(): InstanceScope<T, Variant>[] {
+  public get scopes(): S[] {
     this.validateDisposed(this);
     return [...this._source.values()];
   }
