@@ -4,6 +4,7 @@
  * @export
  * @abstract
  * @class DisposableBase
+ * @since 1.0.0
  */
 export abstract class DisposableBase {
   protected _isDisposed: boolean;
@@ -21,6 +22,7 @@ export abstract class DisposableBase {
    *
    * @return {*}  {void}
    * @memberof DisposableBase
+   * @since 1.0.0
    */
   public dispose(): void {
     if (this.isDisposed) {

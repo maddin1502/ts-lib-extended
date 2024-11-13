@@ -3,8 +3,25 @@
  *
  * @export
  * @class EventArgs
- * @template [TValue=any]
+ * @template {unknown[]} [TArgs=unknown[]]
+ * @since 1.0.0
  */
-export class EventArgs<TValue = any> {
-  constructor(public readonly value: TValue) {}
+export class EventArgs<TArgs extends unknown[] = unknown[]> {
+  private _args: TArgs;
+
+  constructor(...args_: TArgs) {
+    this._args = args_;
+  }
+
+  /**
+   * passed arguments
+   *
+   * @public
+   * @readonly
+   * @type {TArgs}
+   * @since 4.0.0
+   */
+  public get args(): TArgs {
+    return this._args;
+  }
 }

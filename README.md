@@ -6,25 +6,22 @@
 [![npm downloads](https://badgen.net/npm/dw/ts-lib-extended)](https://badge.fury.io/js/ts-lib-extended)
 
 ## Features
-- Enum type
+- Enum type (key and value extraction - ignores reveres mapping)
 - Dictionary types (safe, readonly, key + value types)
 - Constructor types (abstract, standard, parameter + instance types)
 - Core class for disposable instances
-- Events (handler, args)
+- Events (handler, args, cancellation, external subscription + internal invocation)
 - Array types (minimal length array, item type)
+- Enforce Empty Object type (only allows the assignment of empty objects)
+- Scoped instances (create tree structures)
 
 ## Installation
 ```bash
 npm i ts-lib-extended
 ```
-or
-```bash
-yarn add ts-lib-extended
-```
-
 ## Events
 
-With events it is possible to subscribe to specific action or change on an instance.
+With events it is possible to subscribe to a specific action or change on an instance.
 This is inspired by C# and should work in a similar way.
 
 ```ts
@@ -215,12 +212,12 @@ enum NumberEnum {
   bruce
 }
 
-function doSomethingWithEnum({}: Enumerable<string>): void {
+function doSomethingWithEnum(enum_: Enumerable): void {
   /** crazy code here */
 }
 
-doSomethingWithEnum(NumberEnum); // TS Error - function argument is limited to string enum type
-doSomethingWithEnum(MyEnum); // NO error
+doSomethingWithEnum(NumberEnum);
+doSomethingWithEnum(MyEnum);
 ```
 
 ## Gain keys and values
@@ -271,4 +268,80 @@ class SpecialWithoutParams extends Special {
         /* without the generic type "params_" is unusable (and can be omitted) */
     }
 }
+```
+
+# Scoping
+
+Extend your classes from ScopedInstanceCore to get quick access to scopes. Scopes allow you to create a tree structure within your class instance. Variants can be used to create custom instances per scope.
+
+```ts
+import {
+  InstanceScopeCore,
+  ScopedInstanceCore,
+  type InstanceScope
+} from 'ts-lib-extended';
+
+type MyScopeVariants = 'dark' | 'light';
+
+class MyClass extends ScopedInstanceCore<MyClassScope> {
+  constructor(public readonly user?: string) {
+    super();
+  }
+
+  protected disposeScope(scope_: MyClassScope): void {
+    scope_.dispose();
+  }
+
+  protected createScope(scopeId_: PropertyKey): MyClassScope {
+    return new MyClassScope(scopeId_);
+  }
+}
+
+class MyClassScope
+  extends InstanceScopeCore<MyClass, MyScopeVariants>
+  implements InstanceScope<MyClass, MyScopeVariants>
+{
+  public get dark(): MyClass {
+    return this.getOrCreateInstance('dark');
+  }
+
+  public get light(): MyClass {
+    return this.getOrCreateInstance('light');
+  }
+
+  protected createInstance(variant_: MyScopeVariants): MyClass {
+    let user: string;
+
+    console.log(this.scopeId, variant_);
+
+    if (variant_ === 'dark') {
+      if (this.scopeId === 'starwars') {
+        user = 'Anakin Skywalker';
+      } else {
+        user = 'Riku';
+      }
+    } else {
+      if (this.scopeId === 'starwars') {
+        user = 'Luke Skywalker';
+      } else {
+        user = 'Sora';
+      }
+    }
+
+    return new MyClass(user);
+  }
+
+  protected disposeInstance(instance_: MyClass): void {
+    instance_.dispose();
+  }
+}
+
+const mc = new MyClass();
+const starwarsScope = mc.scope('starwars');
+starwarsScope.dark.user; // => Anakin Skywalker
+starwarsScope.light.user; // => Luke Skywalker
+
+const kingdomheartsScope = mc.scope('kingdomhearts'); // or any other scope id
+kingdomheartsScope.dark.user; // => Riku
+kingdomheartsScope.light.user; // => Sora
 ```
