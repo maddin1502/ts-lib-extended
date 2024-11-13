@@ -6,6 +6,12 @@ import { Disposable } from './disposable/index.js';
  * @since 4.0.0
  */
 export type InstanceScopeVariants<T> = {
+  /**
+   * list of all variants in scope
+   *
+   * @type {T[]}
+   * @since 4.0.0
+   */
   variants: T[];
 };
 
@@ -36,7 +42,20 @@ export type ScopesSource<S extends InstanceScope> = Map<PropertyKey, S>;
  * @since 4.0.0
  */
 export type ScopedInstance<S extends InstanceScope> = {
-  scope(id_: PropertyKey): S;
+  /**
+   * get an instance scope by id
+   *
+   * @param {PropertyKey} scopeId_
+   * @returns {S}
+   * @since 4.0.0
+   */
+  scope(scopeId_: PropertyKey): S;
+  /**
+   * list of all scopes
+   *
+   * @type {S[]}
+   * @since 4.0.0
+   */
   scopes: S[];
 };
 
