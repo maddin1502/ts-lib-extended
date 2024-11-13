@@ -13,6 +13,7 @@
 - Events (handler, args, cancellation, external subscription + internal invocation)
 - Array types (minimal length array, item type)
 - Enforce Empty Object type (only allows the assignment of empty objects)
+- Scoped instances (create tree structures)
 
 ## Installation
 ```bash
