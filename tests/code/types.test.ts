@@ -1,10 +1,10 @@
 import { describe, expect, test } from 'vitest';
 
 describe('import test', () => {
-  test('types', () => {
+  test('types', async () => {
     // test whether imports work
     expect.assertions(1);
-    expect(Promise.all([
+    await expect(Promise.all([
       import('@/array.js'),
       import('@/constructor.js'),
       import('@/dictionary.js'),
