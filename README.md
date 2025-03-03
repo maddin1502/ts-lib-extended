@@ -14,13 +14,14 @@
 - Array types (minimal length array, item type)
 - Enforce Empty Object type (only allows the assignment of empty objects)
 - Scoped instances (create tree structures)
+- Type mappings
 
 ## Installation
 ```bash
 npm i ts-lib-extended
 ```
-## Events
 
+## Events
 With events it is possible to subscribe to a specific action or change on an instance.
 This is inspired by C# and should work in a similar way.
 
@@ -156,7 +157,7 @@ console.log(example.isDisposed) // true
 
 This example uses the `disposers` feature for disposing internal stuff. You can also use `overrides` (disposingInstance, disposedInstance) to get this job done.
 
-# Safe dictionary
+## Safe dictionary
 
 ```ts
 import { Dictionary } from 'ts-lib-extended';
@@ -172,7 +173,7 @@ if (answer) {
 }
 ```
 
-# Minimal length array
+## Minimal length array
 
 The type `MinArray` can restrict array values to a minimum length
 
@@ -193,7 +194,7 @@ console.log(calcSum(1)); // TS Error - at least 2 arguments are expected
 console.log(calcSum(1,2,3,5,8,13)); // 32
 ```
 
-# Enumerable
+## Enumerable
 
 By default there is no basic (accessible) enum type that can be used to specify variable/param types. `Enumerable` solves the problem.
 
@@ -220,7 +221,7 @@ doSomethingWithEnum(NumberEnum);
 doSomethingWithEnum(MyEnum);
 ```
 
-## Gain keys and values
+### Gain keys and values
 
 Gaining keys and/or values from an enum is tricky. Object.keys(), Object.values() and Object.entries() do not correctly consider the numeric index reverse lookup entries for numeric enums. The `enumarableObject` will solve this issue.
 
@@ -242,7 +243,7 @@ console.log(Object.entries(NumberEnum)) // [["0", "e1"], ["1", "e2"], ["e1", 0],
 console.log(enumarableObject.entries(NumberEnum)) // [["e1", 0], ["e2", 1]]
 ```
 
-# "Empty Object" type
+## "Empty Object" type
 
 Sometimes you need a `this object is empty`-type (e.g. as a default assignment for generics). Unfortunately, this cannot be achieved with `{}` ([detailed explanation](https://mercury.com/blog/creating-an-emptyobject-type-in-typescript)).
 
@@ -270,7 +271,7 @@ class SpecialWithoutParams extends Special {
 }
 ```
 
-# Scoping
+## Scoping
 
 Extend your classes from ScopedInstanceCore to get quick access to scopes. Scopes allow you to create a tree structure within your class instance. Variants can be used to create custom instances per scope.
 
@@ -344,4 +345,64 @@ starwarsScope.light.user; // => Luke Skywalker
 const kingdomheartsScope = mc.scope('kingdomhearts'); // or any other scope id
 kingdomheartsScope.dark.user; // => Riku
 kingdomheartsScope.light.user; // => Sora
+```
+
+## Type mapping
+
+### Deep partial
+
+Typescript's `Partial<T>` type, but recursive.
+
+```ts
+import { type DeepPartial } from 'ts-lib-extended';
+
+type Something = {
+  a: {
+    b: string;
+  };
+  c: string;
+  d: { e: string; }[];
+}
+
+type MaybeSomething = DeepPartial<Something>;
+/*
+{
+  a?: {
+    b?: string | undefined;
+  } | undefined;
+  c?: string | undefined;
+  d?: ({
+    e?: string | undefined;
+  } | undefined)[] | undefined;
+}
+*/
+```
+
+### Deep required
+
+Typescript's `Required<T>` type, but recursive.
+
+```ts
+import { type DeepRequired } from 'ts-lib-extended';
+
+type MaybeSomething = {
+  a?: {
+    b?: string;
+  };
+  c: string;
+  d: { e?: string; }[];
+}
+
+type Something = DeepRequired<MaybeSomething>;
+/*
+{
+  a: {
+    b: string;
+  };
+  c: string;
+  d: {
+    e: string;
+  }[];
+}
+*/
 ```
