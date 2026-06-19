@@ -6,7 +6,7 @@
 [![npm downloads](https://badgen.net/npm/dw/ts-lib-extended)](https://badge.fury.io/js/ts-lib-extended)
 
 ## Features
-- Enum type (key and value extraction - ignores reveres mapping)
+- Enum type (key and value extraction - ignores reverse mapping)
 - Dictionary types (safe, readonly, key + value types)
 - Constructor types (abstract, standard, parameter + instance types)
 - Core class for disposable instances
@@ -26,7 +26,7 @@ With events it is possible to subscribe to a specific action or change on an ins
 This is inspired by C# and should work in a similar way.
 
 ```ts
-import { Event, EventArgs, Disposable, EventHandler } from 'ts-lib-extended':
+import { Event, EventArgs, Disposable, EventHandler } from 'ts-lib-extended';
 
 export class Example<T> extends Disposable {
   private _valueChangedHandler: EventHandler<this, EventArgs<T>>;
@@ -85,7 +85,7 @@ changeValue(example);
 Actions can be canceled via events.
 
 ```ts
-import { Event, CancelEventArgs, Disposable, EventHandler } from 'ts-lib-extended':
+import { Event, CancelEventArgs, Disposable, EventHandler } from 'ts-lib-extended';
 
 export class Example extends Disposable {
   private _loggingHandler: EventHandler<this, CancelEventArgs<string>>;
@@ -130,7 +130,7 @@ changeValue(example);
 
 ### Disposable
 
-A disposable instance can be cleaned so that references to other instances can be released. After disposing the instance is partly "dead", some parts are vanished and not longer usable.
+A disposable instance can be cleaned up so that references to other instances can be released. After disposing, the instance is partly "dead"; some parts have vanished and are no longer usable.
 
 ```ts
 import { Disposable } from 'ts-lib-extended';
@@ -223,10 +223,10 @@ doSomethingWithEnum(MyEnum);
 
 ### Gain keys and values
 
-Gaining keys and/or values from an enum is tricky. Object.keys(), Object.values() and Object.entries() do not correctly consider the numeric index reverse lookup entries for numeric enums. The `enumarableObject` will solve this issue.
+Gaining keys and/or values from an enum is tricky. Object.keys(), Object.values() and Object.entries() do not correctly consider the numeric index reverse lookup entries for numeric enums. The `enumerableObject` will solve this issue.
 
 ```ts
-import { enumarableObject } from 'ts-lib-extended';
+import { enumerableObject } from 'ts-lib-extended';
 
 enum NumberEnum {
   e1,
@@ -234,13 +234,13 @@ enum NumberEnum {
 }
 
 console.log(Object.keys(NumberEnum)) // ["0", "1", "e1", "e2"]
-console.log(enumarableObject.keys(NumberEnum)) // ["e1", "e2"]
+console.log(enumerableObject.keys(NumberEnum)) // ["e1", "e2"]
 
 console.log(Object.values(NumberEnum)) // ["e1", "e2", 0, 1]
-console.log(enumarableObject.values(NumberEnum)) // [0, 1]
+console.log(enumerableObject.values(NumberEnum)) // [0, 1]
 
 console.log(Object.entries(NumberEnum)) // [["0", "e1"], ["1", "e2"], ["e1", 0], ["e2", 1]]
-console.log(enumarableObject.entries(NumberEnum)) // [["e1", 0], ["e2", 1]]
+console.log(enumerableObject.entries(NumberEnum)) // [["e1", 0], ["e2", 1]]
 ```
 
 ## "Empty Object" type
@@ -351,7 +351,7 @@ kingdomheartsScope.light.user; // => Sora
 
 ### Deep partial
 
-Typescript's `Partial<T>` type, but recursive.
+TypeScript's `Partial<T>` type, but recursive.
 
 ```ts
 import { type DeepPartial } from 'ts-lib-extended';
@@ -380,7 +380,7 @@ type MaybeSomething = DeepPartial<Something>;
 
 ### Deep required
 
-Typescript's `Required<T>` type, but recursive.
+TypeScript's `Required<T>` type, but recursive.
 
 ```ts
 import { type DeepRequired } from 'ts-lib-extended';
