@@ -6,7 +6,7 @@ import type { Prettify } from './mapping.js';
  * ```ts
  * enum MyEnum { a, b }
  *
- * function doMagic(enum: Enumerable): void { ... }
+ * function doMagic(enum_: Enumerable): void { ... }
  *
  * doMagic(MyEnum)
  * ```

@@ -11,7 +11,7 @@ export type StandardConstructor<T = unknown> = new (...args: any[]) => T;
  * abstract class constructor
  *
  * @export
- * @template [T=unkown]
+ * @template [T=unknown]
  * @since 1.0.0
  */
 export type AbstractConstructor<T = unknown> = abstract new (
@@ -22,7 +22,7 @@ export type AbstractConstructor<T = unknown> = abstract new (
  * abstract or non-abstract class constructor
  *
  * @export
- * @template [T=any]
+ * @template [T=unknown]
  * @since 1.0.0
  */
 export type Constructor<T = unknown> =

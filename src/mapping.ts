@@ -7,7 +7,7 @@ export type Prettify<T> = T & unknown;
 // type Prettify3<T> = Pick<T, keyof T>;
 
 /**
- * recursive partial - make everthing optional
+ * recursive partial - make everything optional
  *
  * @export
  * @template T
@@ -20,7 +20,7 @@ export type DeepPartial<T> = T extends object
   : T;
 
 /**
- * recursive required - make everthing required
+ * recursive required - make everything required
  *
  * @export
  * @template T
