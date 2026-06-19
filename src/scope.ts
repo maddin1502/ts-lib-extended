@@ -141,7 +141,7 @@ export abstract class InstanceScopeCore<T, Variant extends string>
     this._source = new Map();
 
     this._disposers.push(() => {
-      this._source.forEach((variante_) => this.disposeInstance(variante_));
+      this._source.forEach((variant_) => this.disposeInstance(variant_));
       this._source.clear();
     });
   }
