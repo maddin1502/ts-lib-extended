@@ -21,14 +21,22 @@ type NotAFunction =
     };
 
 /**
+ * cover all class instances, records, anonymous objects, arrays and functions
+ *
+ * @export
+ * @since 4.1.16
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type RecordLike = Record<PropertyKey, any>;
+
+/**
  * cover all class instances, records, anonymous objects and arrays
  *
  * @alias ObjectLike (on legacy versions)
  * @export
  * @since 4.0.0
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any -- `any` (not `unknown`/`object`) is required so consumers can both assign class instances TO InstanceLike and index INTO an InstanceLike value (`value_[key]`); `object` forbids indexing, `Record<PropertyKey, unknown>` rejects classes
-export type InstanceLike = Record<PropertyKey, any> & NotAFunction;
+export type InstanceLike = RecordLike & NotAFunction;
 
 /**
  * cover all types like "any" or "unknown"

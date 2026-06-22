@@ -1,6 +1,6 @@
 {
   "name": "ts-lib-extended",
-  "version": "4.1.5",
+  "version": "4.1.6",
   "description": "Additional types and tools for typescript",
   "files": [
     "dist"
