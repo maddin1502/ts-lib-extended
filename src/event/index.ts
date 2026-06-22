@@ -31,7 +31,7 @@ export class Event<TSender, TArgs extends EventArgs | void = void> {
   }
 
   /**
-   * subrcribe to event
+   * subscribe to event
    *
    * @readonly
    * @type {EventSubscription<TSender, TArgs>}
@@ -43,7 +43,7 @@ export class Event<TSender, TArgs extends EventArgs | void = void> {
   }
 
   /**
-   * unsubrcribe from event
+   * unsubscribe from event
    *
    * @readonly
    * @type {EventUnsubscription}

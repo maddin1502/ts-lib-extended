@@ -23,6 +23,7 @@ export type InstanceScopeVariants<T> = {
  * @template {string} Variant instance variants (e.g. 'dark' | 'light')
  * @since 4.0.0
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- the `any` default makes InstanceScope usable without type params (e.g. the `S extends InstanceScope` constraint); `unknown`/`object` break that constraint for concrete scope classes (missing index signature)
 export type InstanceScope<T = any, Variant extends string = string> = {
   readonly [key in Variant]: T;
 } & InstanceScopeVariants<T>;
@@ -88,15 +89,15 @@ export abstract class ScopedInstanceCore<S extends InstanceScope>
 
   protected abstract disposeScope(scope_: S): void;
 
-  protected abstract createScope(id_: PropertyKey): S;
+  protected abstract createScope(scopeId_: PropertyKey): S;
 
-  public scope(id_: PropertyKey): S {
+  public scope(scopeId_: PropertyKey): S {
     this.validateDisposed(this);
-    let scope = this._source.get(id_);
+    let scope = this._source.get(scopeId_);
 
     if (!scope) {
-      scope = this.createScope(id_);
-      this._source.set(id_, scope);
+      scope = this.createScope(scopeId_);
+      this._source.set(scopeId_, scope);
     }
 
     return scope;
@@ -141,7 +142,7 @@ export abstract class InstanceScopeCore<T, Variant extends string>
     this._source = new Map();
 
     this._disposers.push(() => {
-      this._source.forEach((variante_) => this.disposeInstance(variante_));
+      this._source.forEach((variant_) => this.disposeInstance(variant_));
       this._source.clear();
     });
   }
